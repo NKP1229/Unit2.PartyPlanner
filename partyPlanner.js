@@ -1,12 +1,21 @@
-// https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT/events
-// "2503-FTB-ET-WEB-FT" "2109-CPU-RM-WEB-PT"
+// api url: "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT/events"
+// cohorts: "2503-FTB-ET-WEB-FT" "2109-CPU-RM-WEB-PT"
 const COHORT = "2503-FTB-ET-WEB-FT";
 const API = `https://fsa-crud-2aa9294fe819.herokuapp.com/api/${COHORT}/events`;
 const state = {
     party: {},
 }
-async function deleteParty(name){
-    
+async function deleteParty(id){
+    try {
+        const response = await fetch(`${API}/${id}`, {
+            method: "DELETE",
+        });
+        const json = await response.json();
+        console.log(json);
+    }
+    catch(error){
+        console.error(error.message);
+    }
     render();
 }
 async function getParties(){
@@ -51,11 +60,14 @@ async function render(){
 }
 render();
 
-//test addParty function
+/*  TEST addParty function  */
 // let p = {
-//     "name": "BESTparty",
-//     "description": "the worst party",
-//     "date": "2025-03-31T00:00:00.000Z",
-//     "location": "a real house"
+//     "name": "Party Wun",
+//     "description": "ferst partee",
+//     "date": "2025-03-31T01:01:01.001Z",
+//     "location": "house of uno"
 // };
 // addParty(p);
+
+/*  TEST deleteParty function  */
+// deleteParty(4621);
