@@ -1,0 +1,20 @@
+body{
+    height: 100vh;
+    align-content: center;
+    background: linear-gradient(90deg, rgb(254, 71, 71), rgb(252, 199, 100));
+}
+main{
+    width: 90%;
+    margin: 0 auto;
+}
+#Table {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+#Form {
+    height: 100%;
+    width: 40%;
+    border: 1.5px solid red;
+    margin: 0 auto;
+}
