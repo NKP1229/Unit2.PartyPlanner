@@ -9,16 +9,31 @@ async function deleteParty(index){
         const id = state[index].id;
         const response = await fetch(`${API}/${id}`, {
             method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
-        const json = await response.json();
-        console.log(json);
+        //const json = await response.json();
+        //console.log(json);
+        if (response.ok) {
+            if (response.status !== 204) {
+                const json = await response.json(); 
+                console.log(json);
+            } else {
+                console.log('Party deleted, no response body');
+            }
+            alert('Party deleted successfully!');
+            render();
+        } else {
+            throw new Error(`Failed to delete party: ${response.statusText}`);
+        }
     }
     catch(error){
         console.error("Error in deleteParty function:", error);
         throw error;
     }
     await new Promise(resolve => setTimeout(resolve, 500));
-    render();
+    window.location.href = window.location.href;
 }
 async function getParties(){
     try{
@@ -40,50 +55,31 @@ async function addParty(event){
         const description = document.getElementById('description').value;
         const date = document.getElementById('date').value;
         let PARTY = {
-            "name": Stringify(name),
-            "description": Stringify(description),
-            "date": Stringify(date),  
-            "location": Stringify(location)
+            "name": name.toString(),
+            "description": description.toString(),
+            "date": (date instanceof Date ? date : new Date(date)).toISOString(),  
+            "location": location.toString()
         };
-        // const formData = new FormData(event.target);
-        // const PARTY = {};
-        //     formData.forEach((value, key) => {
-        //     PARTY[key] = value; // Populate the object with form data
-        // });
         const response = await fetch(`${API}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(PARTY),
-          });
-          if (!response.ok) {
+        });
+        if (!response.ok) {
             const errorData = await response.json();
             throw new Error(`Error: ${response.status} - ${errorData.message || 'Something went wrong'}`);
-          }
+        }
         const json = await response.json();
         console.log('Response:', json);
         alert('Form submitted successfully!');
     }
     catch(error){
+        console.error('Error:', error);
         console.error(error.message);
         alert('There was an error submitting the form.');
     }
 
-    // try{
-    //     const response = await fetch(`${API}`, {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(Party),
-    //     });
-    //     if (!response.ok) {
-    //         const errorData = await response.json();
-    //         throw new Error(`Error: ${response.status} - ${errorData.message || 'Something went wrong'}`);
-    //     }
-    //     const json = await response.json();
-    // }
-    // catch(error){
-    //     console.error(error.message);
-    // }
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     render();
 }
 function renderParties(Party) {
