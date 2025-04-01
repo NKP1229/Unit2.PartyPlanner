@@ -5,7 +5,6 @@ const API = `https://fsa-crud-2aa9294fe819.herokuapp.com/api/${COHORT}/events`;
 const state = [];
 async function deleteParty(index){
     try{
-        // await new Promise(resolve => setTimeout(resolve, 2000));
         console.log(index);
         const id = state[index].id;
         const response = await fetch(`${API}/${id}`, {
@@ -31,22 +30,60 @@ async function getParties(){
         console.error(error.message);
     }
 }
-async function addParty(Party){
+async function addParty(event){
+    event.preventDefault();
     try{
+        console.log("pressed form submit button");
+        console.log(event);
+        const name = document.getElementById('name').value;   
+        const location = document.getElementById('location').value;
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('date').value;
+        let PARTY = {
+            "name": Stringify(name),
+            "description": Stringify(description),
+            "date": Stringify(date),  
+            "location": Stringify(location)
+        };
+        // const formData = new FormData(event.target);
+        // const PARTY = {};
+        //     formData.forEach((value, key) => {
+        //     PARTY[key] = value; // Populate the object with form data
+        // });
         const response = await fetch(`${API}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Party),
-        });
-        if (!response.ok) {
+            body: JSON.stringify(PARTY),
+          });
+          if (!response.ok) {
             const errorData = await response.json();
             throw new Error(`Error: ${response.status} - ${errorData.message || 'Something went wrong'}`);
-        }
+          }
         const json = await response.json();
+        console.log('Response:', json);
+        alert('Form submitted successfully!');
     }
     catch(error){
         console.error(error.message);
+        alert('There was an error submitting the form.');
     }
+
+    // try{
+    //     const response = await fetch(`${API}`, {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(Party),
+    //     });
+    //     if (!response.ok) {
+    //         const errorData = await response.json();
+    //         throw new Error(`Error: ${response.status} - ${errorData.message || 'Something went wrong'}`);
+    //     }
+    //     const json = await response.json();
+    // }
+    // catch(error){
+    //     console.error(error.message);
+    // }
+    await new Promise(resolve => setTimeout(resolve, 5000));
     render();
 }
 function renderParties(Party) {
@@ -106,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
     delete8.addEventListener("click", async function() {await deleteParty(7);});
     delete9.addEventListener("click", async function() {await deleteParty(8);});
     delete10.addEventListener("click", async function() {await deleteParty(9);});
+    document.getElementById('myForm').addEventListener('submit', addParty);
 });
 /*  TEST addParty function  */
 // let p = {

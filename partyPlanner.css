@@ -14,7 +14,8 @@ main{
 }
 #Form {
     height: 100%;
-    width: 40%;
+    width: 70%;
+    max-width: 750px;
     border: 1.5px solid red;
     margin: 0 auto;
 }

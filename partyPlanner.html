@@ -107,7 +107,25 @@
         </table>
       </section>
       <section id="Form">
-
+        <form id="myForm">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Party Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Location</label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Where?">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Description</label>
+            <input type="text" id="description" name="description" class="form-control" placeholder="Details" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Event Date:</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </section>
     </main>
     <script defer src="partyPlanner.js"></script>
